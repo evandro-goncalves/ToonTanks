@@ -16,12 +16,43 @@ APawnTank::APawnTank()
 
 void APawnTank::BeginPlay()
 {
+    Super::BeginPlay();
 }
 
 void APawnTank::Tick(float DeltaSeconds)
 {
+    Super::Tick(DeltaSeconds);
+    
+    Move();
+    Rotate();
 }
 
 void APawnTank::SetupPlayerInputComponent(UInputComponent* PlayerInputComponent)
 {
+    Super::SetupPlayerInputComponent(PlayerInputComponent);
+    
+    PlayerInputComponent->BindAxis("MoveForward", this, &APawnTank::CalculateMoveInput);
+    PlayerInputComponent->BindAxis("Turn", this, &APawnTank::CalculateRotateInput);
+}
+
+void APawnTank::CalculateMoveInput(float Value)
+{
+    MoveDirection = FVector(Value * MoveSpeed * GetWorld()->GetDeltaSeconds(), 0.f, 0.f);
+}
+
+void APawnTank::CalculateRotateInput(float Value)
+{
+    const FRotator Rotation = FRotator(0.f, Value * RotateSpeed * GetWorld()->GetDeltaSeconds(), 0.f);
+
+    RotationDirection = FQuat(Rotation);
+}
+
+void APawnTank::Move()
+{
+    AddActorLocalOffset(MoveDirection, true);
+}
+
+void APawnTank::Rotate()
+{
+    AddActorLocalRotation(RotationDirection, true);
 }
