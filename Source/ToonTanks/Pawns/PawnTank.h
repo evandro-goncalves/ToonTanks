@@ -25,16 +25,18 @@ public:
 
 protected:
 	virtual void BeginPlay() override;
+	virtual void HandleDestruction() override;
 	
 private:
 	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = "Components", meta = (AllowPrivateAccess = "true")) USpringArmComponent* SpringArm;
 	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = "Components", meta = (AllowPrivateAccess = "true")) UCameraComponent* Camera;
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Speed Rate", meta = (AllowPrivateAccess = "true")) float MoveSpeed = 100.f;
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Speed Rate", meta = (AllowPrivateAccess = "true")) float RotateSpeed = 100.f;
+
+	APlayerController* PlayerControllerRef;
 
 	FVector MoveDirection;		// Used to calculate movement direction
 	FQuat RotationDirection;	// Used to calculate rotation direction
-	
-	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Speed Rate", meta = (AllowPrivateAccess = "true")) float MoveSpeed = 100.f;
-	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Speed Rate", meta = (AllowPrivateAccess = "true")) float RotateSpeed = 100.f;
 
 	// Update MoveDirection based on input
 	void CalculateMoveInput(float Value);
