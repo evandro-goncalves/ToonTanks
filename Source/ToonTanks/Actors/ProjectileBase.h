@@ -19,6 +19,8 @@ private:
 	UPROPERTY(EditDefaultsOnly, Category = "Damage") TSubclassOf<UDamageType> DamageType;
 	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = "Damage", meta = (AllowPrivateAccess = "true")) float Damage = 50.f;
 	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = "Movement", meta = (AllowPrivateAccess = "true")) float MovementSpeed = 1300.f;
+
+	UFUNCTION() void OnHit(UPrimitiveComponent* HitComp, AActor* OtherActor, UPrimitiveComponent* OtherComp, FVector NormalImpulse, const FHitResult& Hit);
 	
 public:	
 	// Sets default values for this actor's properties
