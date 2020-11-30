@@ -23,15 +23,23 @@ public:
 	virtual void Tick(float DeltaSeconds) override;
 	virtual void SetupPlayerInputComponent(UInputComponent* PlayerInputComponent) override;
 
+	virtual void HandleDestruction() override;
+
 protected:
 	virtual void BeginPlay() override;
-	virtual void HandleDestruction() override;
 	
 private:
-	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = "Components", meta = (AllowPrivateAccess = "true")) USpringArmComponent* SpringArm;
-	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = "Components", meta = (AllowPrivateAccess = "true")) UCameraComponent* Camera;
-	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Speed Rate", meta = (AllowPrivateAccess = "true")) float MoveSpeed = 100.f;
-	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Speed Rate", meta = (AllowPrivateAccess = "true")) float RotateSpeed = 100.f;
+	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = "Components", meta = (AllowPrivateAccess = "true"))
+	USpringArmComponent* SpringArm;
+
+	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = "Components", meta = (AllowPrivateAccess = "true"))
+	UCameraComponent* Camera;
+
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Speed Rate", meta = (AllowPrivateAccess = "true"))
+	float MoveSpeed = 100.f;
+
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Speed Rate", meta = (AllowPrivateAccess = "true"))
+	float RotateSpeed = 100.f;
 
 	APlayerController* PlayerControllerRef;
 

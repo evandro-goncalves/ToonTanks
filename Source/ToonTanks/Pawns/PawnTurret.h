@@ -17,12 +17,14 @@ class TOONTANKS_API APawnTurret : public APawnBase
 	GENERATED_BODY()
 
 public:
+	// Constructor and overrides
 	APawnTurret();
 	virtual void Tick(float DeltaSeconds) override;
 
+	virtual void HandleDestruction() override;
+
 protected:
 	virtual void BeginPlay() override;
-	virtual void HandleDestruction() override;
 	
 private:
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Combat", meta = (AllowPrivateAccess = "true")) float FireRate = 2.f;
