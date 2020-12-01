@@ -24,12 +24,12 @@ APawnBase::APawnBase()
 	ProjectileSpawnPoint->SetupAttachment(TurretMesh);
 }
 
-void APawnBase::RotateTurretFunction(FVector LookAtTarget)
+void APawnBase::RotateTurretFunction(const FVector LookAtTarget) const
 {
-	FVector LookAtTargetClean = FVector(LookAtTarget.X, LookAtTarget.Y, TurretMesh->GetComponentLocation().Z);
-	FVector StartLocation = TurretMesh->GetComponentLocation();
+	const FVector LookAtTargetClean = FVector(LookAtTarget.X, LookAtTarget.Y, TurretMesh->GetComponentLocation().Z);
+	const FVector StartLocation = TurretMesh->GetComponentLocation();
 
-	FRotator TurretRotation = FVector(LookAtTargetClean - StartLocation).Rotation();
+	const FRotator TurretRotation = FVector(LookAtTargetClean - StartLocation).Rotation();
 
 	TurretMesh->SetWorldRotation(TurretRotation);
 }
@@ -39,8 +39,8 @@ void APawnBase::Fire()
 	// Get ProjectileSpawnPoint Location && Rotation -> Spawn projectile class at Location firing towards Rotation.
 	if (ProjectileClass)
 	{
-		FVector SpawnLocation = ProjectileSpawnPoint->GetComponentLocation();
-		FRotator SpawnRotation = ProjectileSpawnPoint->GetComponentRotation();
+		const FVector SpawnLocation = ProjectileSpawnPoint->GetComponentLocation();
+		const FRotator SpawnRotation = ProjectileSpawnPoint->GetComponentRotation();
 		
 		AProjectileBase* TempProjectile = GetWorld()->SpawnActor<AProjectileBase>(ProjectileClass, SpawnLocation, SpawnRotation);
 

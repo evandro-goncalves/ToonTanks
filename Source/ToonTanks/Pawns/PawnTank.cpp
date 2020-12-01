@@ -75,5 +75,5 @@ void APawnTank::HandleDestruction()
 {
     Super::HandleDestruction();
 
-    //TODO: Hide actor
+    // TODO: Hide actor
 }

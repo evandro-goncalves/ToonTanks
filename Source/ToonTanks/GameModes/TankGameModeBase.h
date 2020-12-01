@@ -8,6 +8,7 @@
 
 class APawnTank;
 class APawnTurret;
+class APlayerControllerBase;
 
 /**
  * 
@@ -35,6 +36,7 @@ protected:
 
 private:
 	APawnTank* PlayerTank;
+	APlayerControllerBase* PlayerControllerRef;
 	int32 TargetTurrets = 0;
 	
 	void HandleGameStart();

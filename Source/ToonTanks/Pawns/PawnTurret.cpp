@@ -32,7 +32,8 @@ void APawnTurret::BeginPlay()
 
 void APawnTurret::CheckFireCondition()
 {
-    //todo: If player is null or is dead then bail
+    // TODO: If player is null or is dead then bail
+    
     if (!PlayerPawn)
     {
         return;

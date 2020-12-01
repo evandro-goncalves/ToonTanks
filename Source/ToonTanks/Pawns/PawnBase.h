@@ -37,6 +37,6 @@ private:
 	TSubclassOf<AProjectileBase> ProjectileClass;
 	
 protected:
-	void RotateTurretFunction(FVector LookAtTarget);
+	void RotateTurretFunction(FVector LookAtTarget) const;
 	void Fire();
 };

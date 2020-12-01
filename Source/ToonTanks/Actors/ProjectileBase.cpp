@@ -47,7 +47,7 @@ void AProjectileBase::OnHit(UPrimitiveComponent* HitComp, AActor* OtherActor, UP
 		UGameplayStatics::ApplyDamage(OtherActor, Damage, MyOwner->GetInstigatorController(), this, DamageType);
 	}
 
-	//TODO: Apply a bunch of effects here during the polish phase
+	// TODO: Apply a bunch of effects here during the polish phase
 
 	Destroy();
 }
