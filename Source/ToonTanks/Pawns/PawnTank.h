@@ -22,8 +22,9 @@ public:
 	APawnTank();
 	virtual void Tick(float DeltaSeconds) override;
 	virtual void SetupPlayerInputComponent(UInputComponent* PlayerInputComponent) override;
-
 	virtual void HandleDestruction() override;
+
+	bool GetIsPlayerAlive() const;
 
 protected:
 	virtual void BeginPlay() override;
@@ -41,6 +42,8 @@ private:
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Speed Rate", meta = (AllowPrivateAccess = "true"))
 	float RotateSpeed = 100.f;
 
+	bool bIsPlayerAlive = true;
+	
 	APlayerController* PlayerControllerRef;
 
 	FVector MoveDirection;		// Used to calculate movement direction
