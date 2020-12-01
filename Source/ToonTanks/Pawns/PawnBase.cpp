@@ -10,57 +10,58 @@
 // Sets default values
 APawnBase::APawnBase()
 {
- 	// Set this pawn to call Tick() every frame.  You can turn this off to improve performance if you don't need it.
-	PrimaryActorTick.bCanEverTick = true;
+    // Set this pawn to call Tick() every frame.  You can turn this off to improve performance if you don't need it.
+    PrimaryActorTick.bCanEverTick = true;
 
-	CapsuleComponent = CreateDefaultSubobject<UCapsuleComponent>(TEXT("Capsule Collider"));
-	RootComponent = CapsuleComponent;
+    CapsuleComponent = CreateDefaultSubobject<UCapsuleComponent>(TEXT("Capsule Collider"));
+    RootComponent = CapsuleComponent;
 
-	BaseMesh = CreateDefaultSubobject<UStaticMeshComponent>(TEXT("Base Mesh"));
-	BaseMesh->SetupAttachment(RootComponent);
+    BaseMesh = CreateDefaultSubobject<UStaticMeshComponent>(TEXT("Base Mesh"));
+    BaseMesh->SetupAttachment(RootComponent);
 
-	TurretMesh = CreateDefaultSubobject<UStaticMeshComponent>(TEXT("Turret Mesh"));
-	TurretMesh->SetupAttachment(BaseMesh);
+    TurretMesh = CreateDefaultSubobject<UStaticMeshComponent>(TEXT("Turret Mesh"));
+    TurretMesh->SetupAttachment(BaseMesh);
 
-	ProjectileSpawnPoint = CreateDefaultSubobject<USceneComponent>(TEXT("Projectile Spawn Point"));
-	ProjectileSpawnPoint->SetupAttachment(TurretMesh);
+    ProjectileSpawnPoint = CreateDefaultSubobject<USceneComponent>(TEXT("Projectile Spawn Point"));
+    ProjectileSpawnPoint->SetupAttachment(TurretMesh);
 
-	HealthComponent = CreateDefaultSubobject<UHealthComponent>(TEXT("Health Component"));
+    HealthComponent = CreateDefaultSubobject<UHealthComponent>(TEXT("Health Component"));
 }
 
 void APawnBase::RotateTurretFunction(const FVector LookAtTarget) const
 {
-	const FVector LookAtTargetClean = FVector(LookAtTarget.X, LookAtTarget.Y, TurretMesh->GetComponentLocation().Z);
-	const FVector StartLocation = TurretMesh->GetComponentLocation();
+    const FVector LookAtTargetClean = FVector(LookAtTarget.X, LookAtTarget.Y, TurretMesh->GetComponentLocation().Z);
+    const FVector StartLocation = TurretMesh->GetComponentLocation();
 
-	const FRotator TurretRotation = FVector(LookAtTargetClean - StartLocation).Rotation();
+    const FRotator TurretRotation = FVector(LookAtTargetClean - StartLocation).Rotation();
 
-	TurretMesh->SetWorldRotation(TurretRotation);
+    TurretMesh->SetWorldRotation(TurretRotation);
 }
 
 void APawnBase::Fire()
 {
-	// Get ProjectileSpawnPoint Location && Rotation -> Spawn projectile class at Location firing towards Rotation.
-	if (ProjectileClass)
-	{
-		const FVector SpawnLocation = ProjectileSpawnPoint->GetComponentLocation();
-		const FRotator SpawnRotation = ProjectileSpawnPoint->GetComponentRotation();
-		
-		AProjectileBase* TempProjectile = GetWorld()->SpawnActor<AProjectileBase>(ProjectileClass, SpawnLocation, SpawnRotation);
+    // Get ProjectileSpawnPoint Location && Rotation -> Spawn projectile class at Location firing towards Rotation.
+    if (ProjectileClass)
+    {
+        const FVector SpawnLocation = ProjectileSpawnPoint->GetComponentLocation();
+        const FRotator SpawnRotation = ProjectileSpawnPoint->GetComponentRotation();
 
-		TempProjectile->SetOwner(this);
-	}
+        AProjectileBase* TempProjectile = GetWorld()->SpawnActor<AProjectileBase>(
+            ProjectileClass, SpawnLocation, SpawnRotation);
+
+        TempProjectile->SetOwner(this);
+    }
 }
 
 void APawnBase::HandleDestruction()
 {
-	// ----- Universal functionality -----
-	// Play death effects particle, sound and camera shake
+    // ----- Universal functionality -----
+    // Play death effects particle, sound and camera shake
 
-	UGameplayStatics::SpawnEmitterAtLocation(this, DeathParticle, GetActorLocation());
+    UGameplayStatics::SpawnEmitterAtLocation(this, DeathParticle, GetActorLocation());
+    UGameplayStatics::SpawnSoundAtLocation(this, DeathSound, GetActorLocation());
 
-	// ---- Then do Child overrides -----
-	// -- PawnTurret -> Inform GameMode Turret died then Destroy() self
-	// -- PawnTank -> Inform GameMode Player died then Hide() all components && stop movement input 
+    // ---- Then do Child overrides -----
+    // -- PawnTurret -> Inform GameMode Turret died then Destroy() self
+    // -- PawnTank -> Inform GameMode Player died then Hide() all components && stop movement input 
 }
-
