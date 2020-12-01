@@ -46,6 +46,9 @@ private:
     UPROPERTY(EditAnywhere, Category = "Effects")
     USoundBase* DeathSound;
 
+    UPROPERTY(EditAnywhere, Category = "Effects")
+    TSubclassOf<UCameraShake> DeathShake;
+
 protected:
     void RotateTurretFunction(FVector LookAtTarget) const;
     void Fire();
